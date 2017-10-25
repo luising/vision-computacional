@@ -1,1 +1,1 @@
-# vision-computacional-2
+# vision-computacional
