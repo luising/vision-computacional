@@ -31,6 +31,20 @@ def buscarCamino(matriz, cond):
                     matriz[x] = 0
     return Listp
 
+def neighbors(Pixels, Mh, Mv, beta ):
+    r, c = getRowsColumns(pixels)
+    vecendario = 1
+    mapneighbor = np.zeros(shape=(r, c))
+    for y in range(r - 1):
+        for x in range(c - 1):
+            horizontal = Mh[y][x]
+            vertical = Mv[y][x]
+            pixel = pixels[y][x]
+            pH = horizontal >= horizontal + beta  and  horizontal >= horizontal - beta
+            if d1 <= beta:
+                imagen.pixels[y, x] = vecindario
+            else:
+                imagen.pixels[y, x] = borde
 
 # largo de segmento binaria
 # matriz estandar
@@ -196,3 +210,16 @@ def inPosNeighboring(pos):
         if i[0] == pos:
             # print(i[1])
             return i[1]
+
+def saveMatriz(matriz, name, nom=0):
+    lista = []
+    file = open(name, 'w')
+    for fila in matriz:
+        for pixel in fila:
+            if nom:
+                value = str(1 if pixel == 255 else int(pixel)) + ","
+            else:
+                value = str(int(pixel)) + ","
+            file.write(value)
+        file.write("\n")
+    file.close()

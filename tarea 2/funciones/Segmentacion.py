@@ -1,4 +1,6 @@
 from Imagen import *
+import numpy as np
+import collections
 
 def Discontinuidad(imagen):
     intencidad = 255
@@ -35,35 +37,46 @@ def Discontinuidad(imagen):
     imagen.savecv("new.png")
     return imagen
 
-
 def Similitud(imagen):
-    vecindario = 255
-    borde = 0
-    beta = 50
-    h, w = imagen.size()
+    umbral = 2
+    neighbor = 1
+    pixels = np.array(imagen.pixels)
+    neighbors = np.zeros(shape=imagen.size())
+    mapp = np.zeros(shape=imagen.size())
+    r, c = imagen.size()
+    for y in range(r):
+        for x in range(c):
+            if x > 0 and y > 0:
+                mapp[y - 1:y + 2,x - 1:x + 2] = pixels[y - 1:y + 2,x - 1:x + 2] - pixels[y, x]
+                v = mapp[y - 1:y + 2, x - 1:x + 2]
+                v[v < umbral] = 255
+                v[v < 255] = 0
+                mapp[y - 1:y + 2, x - 1:x + 2] = v
 
-    print(h, w)
-    mapaH2 = [[(abs(int(imagen.pixels[y][x + 1]) - int(imagen.pixels[y][x]))) for x in range(w - 1)] for y in range(h)]
-    mapaV2 = [[(abs(int(imagen.pixels[y + 1][x]) - int(imagen.pixels[y][x]))) for x in range(w)] for y in range(h - 1)]
-    print("DH2:", len(mapaH2), len(mapaH2[0]))
+    for y in range(r):
+        for x in range(c):
+            if x > 0 and y > 0:
+                mv = neighbors[y - 1:y + 2,x - 1:x + 2]
+                ve = np.unique(mv)
+                lve = len(ve)
+                if(lve == 2):
+                    neighbors[y, x] = ve[1]
+                
+                # if pixels[y, x] == 0:
+                #     neigbors += 1
+                # n[] = neigbors
+                # mv = n
+                # neighbors[y - 1:y + 2,x - 1:x + 2] = mv
+            elif(y == 0):
+                if mapp[y, x] == 0:
+                    neighbor += 1
+                neighbors[y, x] = neighbor
 
-    asign = [[0 for _ in range(h - 1)] for d in range(w - 1)]
-    print(asign)
-    for y in range(h - 1):
-        for x in range(w - 1):
-            d1 = mapaH2[y][x]
-            d1 = 255 if(d1 > 255) else d1
-            if d1 <= beta:
-                imagen.pixels[y, x] = vecindario
-            else:
-                imagen.pixels[y, x] = borde
-    for x in range(w - 1):
-        for y in range(h - 1):
-            dv1 = mapaV2[y][x]
-            dv1 = 255 if(dv1 > 255) else dv1
-            if dv1 > beta:
-                imagen.pixels[y, x] = borde
 
-    # lm.printM(imagen.pixels)
-    imagen.savecv("new.png")
-Similitud(Imagen("w.png", 'L'))
+    lm.saveMatriz(pixels, "pixels.txt")
+    lm.saveMatriz(mapp, "borde.txt", 1)
+    lm.saveMatriz(neighbors, "v.txt", 1)
+    cv2.imwrite("bordes.png", mapp)
+    cv2.imwrite("neig.png", neighbors)
+
+Similitud(Imagen("p.png", 'L'))
