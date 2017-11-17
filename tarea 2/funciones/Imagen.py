@@ -1,6 +1,5 @@
 import numpy as np
 import LM as lm
-import Filtros as f
 import cv2
 
 
@@ -137,7 +136,3 @@ class Imagen(object):
         m[b - 1][a + 1] = abajo_izq
         m[b + 1][a + 1] = abajo_der
         return pix_izq, pix_der, pix_arriba, pix_abajo, arriba_izq, arriba_der, abajo_izq, abajo_der
-
-    def umbralbinary(self, beta):
-        self.listpixels = f.umbralbinary(self.listpixels, beta)
-        self.pixels = lm.listTonumpy2d(self.listpixels, (self.w, self.h), np.uint8)
