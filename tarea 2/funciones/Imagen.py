@@ -1,5 +1,4 @@
-import numpy as np
-import LM as lm
+"""Libreria Imagen."""
 import cv2
 
 
