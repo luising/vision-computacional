@@ -10,6 +10,7 @@ row, column = 0, 0
 Neighbor = isFirst = firstP = 1
 newPivote = 0
 umbral = 0
+pixels = 0
 
 
 def setParameter(imagen):
@@ -20,6 +21,7 @@ def setParameter(imagen):
     ArrayMap = np.zeros(shape=imagen.size())
     aEdge = np.zeros(shape=imagen.size())
     row, column = imagen.size()
+    pixels = imagen.pixels
     ArrayMap[0][0] = 1
     newPivote = 0
 
@@ -39,6 +41,7 @@ def searchNeighbor():
                 if firstP:
                     newPivote = y, x
                     firstP = 0
+                aEdge[y, x] = 255
                 ArrayMap[y, x] = 0
             else:
                 v = ArrayMap[yf:y + 2, xf:x + 2]

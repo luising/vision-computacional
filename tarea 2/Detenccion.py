@@ -7,7 +7,7 @@ import funciones.LM as lm
 from funciones.Imagen import Imagen
 
 # carga de imagen
-imagen = Imagen("op.jpeg", 'L')
+imagen = Imagen("im.png", 'L')
 pixels = seg.umbral16(imagen.pixels, 16)
 cv2.imwrite("im.png", pixels)
 pixels = np.array(pixels)
