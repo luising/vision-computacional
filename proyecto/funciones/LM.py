@@ -162,7 +162,8 @@ def indexElementM(matriz, element, skip="no"):
     else:
         for r in range(Rows):
             for c in range(Columns):
-                if (r, c) == skip: continue
+                if (r, c) == skip:
+                    continue
                 if matriz[r][c] == element:
                     Listindex.append((r, c))
     return Listindex

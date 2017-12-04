@@ -15,7 +15,7 @@ class App(Frame):
 
     def buildUI(self):
 
-        self.parent.title("determinar el tamaño de corte de queso ")
+        self.parent.title("Determinar el tamaño de corte de queso ")
         self.pack()
 
         self.menubar = Menu(root)
@@ -27,7 +27,7 @@ class App(Frame):
         self.filemenu.add_command(label="Salir", command=self.parent.quit)
 
         self.menubar.add_cascade(label="Archivo", menu=self.filemenu)
-        self.menubar.add_command(label="determinar tamaño", command=self.procesar)
+        self.menubar.add_command(label="Determinar tamaño", command=self.procesar)
         self.filtersmenu = Menu(self.menubar, tearoff=0)
 
         canvasContainer = Frame(self.parent)
